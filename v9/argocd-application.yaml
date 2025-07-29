@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-helm-v9
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # 1. Argo CD가 바라볼 Git 저장소 주소입니다.
+    # 본인의 원격 저장소 주소로 변경해주세요.
+    repoURL: 'https://github.com/jamin12/k8s-test.git'
+    
+    # 2. 저장소 내에서 헬름 차트가 위치한 경로입니다.
+    path: v9/myapp-chart
+    
+    # 3. 어떤 브랜치를 추적할지 결정합니다.
+    targetRevision: main
+    
+    # 4. 이 소스가 헬름 차트임을 명시하고, 설정 파일을 지정합니다.
+    helm:
+      valueFiles:
+        - values.yaml
+        
+  destination:
+    # 배포할 클러스터 주소 (Argo CD가 설치된 클러스터는 이 값을 사용)
+    server: 'https://kubernetes.default.svc'
+    # 리소스들이 실제로 배포될 네임스페이스
+    namespace: default
+    
+  syncPolicy:
+    automated:
+      prune: true # Git에서 없어진 리소스는 클러스터에서도 자동 삭제
+      selfHeal: true # 클러스터의 상태가 Git과 달라지면 자동으로 Git 상태로 복구
+    syncOptions:
+      - CreateNamespace=true # 'destination.namespace'가 없으면 자동으로 생성
