@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "kubernetes://schema/networking.k8s.io/v1@ingress": "file:///Users/injeinc/Desktop/jamin/project/anyting_test/k8s-test/v4/ingress.yaml"
+    }
+}

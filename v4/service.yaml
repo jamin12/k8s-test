@@ -1,0 +1,14 @@
+# v4/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  selector:
+    app: myapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  # 인그레스가 외부 접근을 관리하므로, 서비스는 내부 통신용인 ClusterIP로 충분합니다.
+  type: ClusterIP

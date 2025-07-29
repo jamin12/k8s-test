@@ -1,0 +1,30 @@
+# v5/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 3 # Argo CD가 동기화할 레플리카 수
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+        version: v5 # GitOps로 배포된 버전을 명시
+    spec:
+      containers:
+      - name: myapp-container
+        image: nginx:stable
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"

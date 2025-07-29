@@ -1,0 +1,31 @@
+# v3/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 1 # 오토스케일링을 명확히 보기 위해 1개에서 시작
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+        version: v3
+    spec:
+      containers:
+      - name: myapp-container
+        image: nginx:stable
+        ports:
+        - containerPort: 80
+        # HPA가 사용률을 계산하기 위해 반드시 필요한 리소스 요청 설정
+        resources:
+          requests:
+            cpu: "200m" # 0.2 CPU 코어를 요청
+            memory: "64Mi"
+          limits:
+            cpu: "500m" # 최대 0.5 CPU 코어까지 사용 가능
+            memory: "128Mi"
