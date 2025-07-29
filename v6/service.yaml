@@ -1,0 +1,13 @@
+# v6/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  selector:
+    app: myapp # app:myapp 레이블을 가진 모든 파드(v1, v2)를 선택
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080

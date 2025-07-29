@@ -1,0 +1,25 @@
+# v6/deployment-v2.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: myapp
+        version: v2
+    spec:
+      containers:
+      - name: myapp
+        image: hashicorp/http-echo
+        args:
+          - "-text=response from v2 (canary)"
+          - "-listen=:8080"
+        ports:
+        - containerPort: 8080

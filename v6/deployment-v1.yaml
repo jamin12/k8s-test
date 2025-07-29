@@ -1,0 +1,25 @@
+# v6/deployment-v1.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: myapp
+        version: v1
+    spec:
+      containers:
+      - name: myapp
+        image: hashicorp/http-echo
+        args:
+          - "-text=response from v1"
+          - "-listen=:8080"
+        ports:
+        - containerPort: 8080

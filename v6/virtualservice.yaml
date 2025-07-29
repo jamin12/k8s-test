@@ -1,0 +1,20 @@
+# v6/virtualservice.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: myapp-virtualservice
+spec:
+  hosts:
+  - "myapp.example.com"
+  gateways:
+  - myapp-gateway
+  http:
+  - route:
+    - destination:
+        host: myapp-service
+        subset: v1
+      weight: 90 # 트래픽의 90%를 v1으로
+    - destination:
+        host: myapp-service
+        subset: v2
+      weight: 10 # 트래픽의 10%를 v2로
