@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: redis-vs
+  namespace: db
+spec:
+  hosts: ["*"]
+  gateways: ["redis-gw"]
+  tcp:
+  - match:
+    - port: 6379
+    route:
+    - destination:
+        host: redis-master.db.svc.cluster.local
+        port:
+          number: 6379

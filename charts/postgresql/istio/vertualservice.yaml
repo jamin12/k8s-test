@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: pg-vs
+  namespace: db
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - pg-gateway
+  tcp:
+    - match:
+        - port: 5432
+      route:
+        - destination:
+            host: pg-postgresql.db.svc.cluster.local
+            port:
+              number: 5432

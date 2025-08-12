@@ -1,0 +1,10 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: redis-dr
+  namespace: db
+spec:
+  host: redis-master.db.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
